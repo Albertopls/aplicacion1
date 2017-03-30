@@ -41,6 +41,7 @@ public class login extends AppCompatActivity {
         final boolean[] recordareyc = {false};
 
 
+
         recordar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
