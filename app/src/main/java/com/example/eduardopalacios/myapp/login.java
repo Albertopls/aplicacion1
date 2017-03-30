@@ -142,6 +142,7 @@ public class login extends AppCompatActivity {
 
     public void cargar_archivo()
     {
+        //cadena
 
             String opcion = "true";
             try {
