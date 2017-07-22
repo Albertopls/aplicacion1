@@ -1,7 +1,10 @@
 package com.example.eduardopalacios.myapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -128,20 +131,26 @@ public class Navigationdrawer extends AppCompatActivity
 
         } else if (id == R.id.nav_sign) {
 
-            String cadena;
+            //String cadena;
+            //Navigationdrawer.this.startActivity(new Intent(Navigationdrawer.this, login.class));
+            //Navigationdrawer.this.finish();
+            //String opcion = "false";
+            //try {
+
+              //  FileOutputStream fos = openFileOutput("textFile.txt", MODE_PRIVATE);
+                //OutputStreamWriter osw = new OutputStreamWriter(fos);
+                //osw.write(opcion);
+                //osw.flush();
+                //osw.close();
+            //} catch (IOException e) {
+              //  e.printStackTrace();
+            //}
+            //Context context=this;
+            SharedPreferences remover = PreferenceManager.getDefaultSharedPreferences(this);
+            remover.edit().remove("email").commit();
+            remover.edit().remove("contrasenia").commit();
             Navigationdrawer.this.startActivity(new Intent(Navigationdrawer.this, login.class));
             Navigationdrawer.this.finish();
-            String opcion = "false";
-            try {
-
-                FileOutputStream fos = openFileOutput("textFile.txt", MODE_PRIVATE);
-                OutputStreamWriter osw = new OutputStreamWriter(fos);
-                osw.write(opcion);
-                osw.flush();
-                osw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
         }
 

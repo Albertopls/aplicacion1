@@ -1,9 +1,13 @@
 package com.example.eduardopalacios.myapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,17 +32,24 @@ import java.io.OutputStreamWriter;
 public class login extends AppCompatActivity {
 
 
+
+    Context context=this;
+    Boolean recordarUsuario;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(getWindow().FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+
         final EditText email_login=(EditText)findViewById(R.id.Email_address);
         final EditText password_login=(EditText)findViewById(R.id.password);
         final Button login_button=(Button)findViewById(R.id.login);
         final TextView register_here=(TextView)findViewById(R.id.register_here);
         final CheckBox recordar=(CheckBox) findViewById(R.id.checkBox);
-        final boolean[] recordareyc = {false};
 
 
 
@@ -46,8 +57,10 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+              recordarUsuario=true;
 
-              recordareyc[0] =true;
+
+
             }
         });
 
@@ -93,7 +106,8 @@ public class login extends AppCompatActivity {
                             if (success) {
                                 String first_name = jsonResponse.getString("first_name");
                                 String last_name = jsonResponse.getString("last_name");
-                                nombre[0] =first_name;
+
+
 
                                 Intent intent = new Intent(login.this, Navigationdrawer.class);
 
@@ -103,6 +117,11 @@ public class login extends AppCompatActivity {
 
                                 login.this.startActivity(intent);
 
+
+                                if (recordarUsuario)
+                                {
+                                    recordarUsuario(email,password);
+                                }
 
 
 
@@ -115,15 +134,7 @@ public class login extends AppCompatActivity {
 
                         }
 
-                        if(recordareyc[0])
-                        {
-                            cargar_archivo();
 
-                            Intent intent2 = new Intent(login.this, Navigationdrawer.class);
-                            intent2.putExtra("identificador",nombre[0]);
-
-
-                        }
 
 
                     }
@@ -158,6 +169,21 @@ public class login extends AppCompatActivity {
 
 
 
+    }
+    public boolean valoresCorrectos()
+    {
+        return recordarUsuario;
+    }
+    public void recordarUsuario(String email, String contrasenia)
+    {
+        SharedPreferences almacenardatos = PreferenceManager
+                .getDefaultSharedPreferences(login.this);
+
+        SharedPreferences.Editor editor=almacenardatos.edit();
+
+        editor.putString("email",email);
+        editor.putString("contrasenia",contrasenia);
+        editor.commit();
     }
 
 }
